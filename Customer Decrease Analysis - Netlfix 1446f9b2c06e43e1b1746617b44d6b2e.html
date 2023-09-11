@@ -1,0 +1,694 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Customer Decrease Analysis - Netlfix</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1446f9b2-c06e-43e1-b174-6617b44d6b2e" class="page sans"><header><h1 class="page-title">Customer Decrease Analysis - Netlfix</h1><p class="page-description"></p></header><div class="page-body"><p id="9c7b67f4-6481-4ba9-a7eb-0f0bd63d6b8b" class="">
+</p><figure id="fc5ede4e-41f9-4efb-8d62-e9367e4671bf" class="image"><a href="Customer%20Decrease%20Analysis%20-%20Netlfix%201446f9b2c06e43e1b1746617b44d6b2e/replicate-prediction-6456lrrbwmrzt5euocnznzxp6y.png"><img style="width:384px" src="Customer%20Decrease%20Analysis%20-%20Netlfix%201446f9b2c06e43e1b1746617b44d6b2e/replicate-prediction-6456lrrbwmrzt5euocnznzxp6y.png"/></a></figure><p id="77032b53-5ec6-4e25-a560-7090597d6289" class="">
+ Let&#x27;s consider a hypothetical situation where a media platform, such as Netflix, experiences a decline of <strong>1 million</strong> users in their <strong>Monthly Active Users (MAU)</strong>. Our objective is to investigate the reasons behind this drop, present them in an engaging manner, and provide recommendations to overcome this issue. One effective approach to tackle this problem is by employing the<strong> root cause technique analysis🔬</strong></p><p id="49252d3d-dbb0-46f0-b38f-78f54ff5735b" class="">
+</p><figure id="585f92b6-c2b6-4b7d-b172-86837b8bd81e" class="image"><a href="Customer%20Decrease%20Analysis%20-%20Netlfix%201446f9b2c06e43e1b1746617b44d6b2e/instad.io-11_Sep_2023_15_14.png"><img style="width:384px" src="Customer%20Decrease%20Analysis%20-%20Netlfix%201446f9b2c06e43e1b1746617b44d6b2e/instad.io-11_Sep_2023_15_14.png"/></a></figure><p id="ddfeefd2-c8be-4d33-a481-e7731dfe10b2" class="">
+</p><p id="c5f767f4-f403-4096-a937-93f5767e43f2" class="">  To begin with, it is crucial to <strong>identify and define the problem</strong>. By doing so, we establish the scope and direction of our analysis, as a clear problem statement is essential for devising a solution.</p><p id="8c0dec6d-f999-41eb-b5d0-c938b6eea426" class=""> Additionally, I suggest <strong>breaking down the problem into smaller inquiries</strong> rather than solely focusing on <strong>gathering data</strong>. This approach will allow us to gain a better understanding of which specific data points to examine in order to formulate more insightful business recommendations💡</p><p id="61a4b34d-de5b-49c3-88df-3e3b03035d3d" class="">
+</p><h3 id="b0f1d0bd-532e-4389-9bd5-d0f2cce5abd7" class=""> B<strong>reakdown of the problem in smaller questions</strong></h3><p id="4eb29592-176c-46ca-bd06-1f4964cd6a3a" class="">Here are some good examples:</p><ul id="bc15b94c-6216-4577-9081-f4e438adc3c4" class="bulleted-list"><li style="list-style-type:disc">[Impact Sizing] How long have we been seeing this MAU decline, and what is the size of this user decline?</li></ul><ul id="2d6c430a-8db4-4ff7-9b5f-3c9febb58bfb" class="bulleted-list"><li style="list-style-type:disc">[Geography] Are we seeing this on a global level or in a specific market?</li></ul><ul id="77c03d94-9752-4aa2-8cdc-9ecce668b413" class="bulleted-list"><li style="list-style-type:disc">[Seasonality] Did we see MAU decline last year around the same time too or did it only start this year? Maybe it&#x27;s a recurring pattern and related to seasonality?</li></ul><ul id="76d68136-f03e-4b74-a639-1e65a8836a59" class="bulleted-list"><li style="list-style-type:disc">[Demographic] Is there any age group that&#x27;s seeing a significant user decline?</li></ul><ul id="3047a113-af26-4afb-ad7d-c8b88308ad4c" class="bulleted-list"><li style="list-style-type:disc">[Metric Breakdown] Are we seeing fewer new and reactivated users coming in or are we seeing more users churning out?</li></ul><ul id="23ee72f2-57ae-4f78-a74b-288f00f3ba7f" class="bulleted-list"><li style="list-style-type:disc">[External] Are there any new competitors that launched in the market or did an existing competitor roll out a new feature or offering?</li></ul><ul id="81e0bcf8-0520-4f94-978f-f4e1123512f9" class="bulleted-list"><li style="list-style-type:disc">[Internal] Is there a bug that happened in our data systems? Or did we run any experiments that could be cannibalizing our MAU?</li></ul><ul id="e68d0566-3b70-43e2-99e6-2b0850b39eb0" class="bulleted-list"><li style="list-style-type:disc">[Platform+External]  Is there a device type (like iOS and Android) that&#x27;s seeing a significant user decline?</li></ul><p id="3babdd24-15b9-48b0-a25d-b51f74649ca4" class="">
+</p><p id="8f4c9dd3-0042-4597-a42a-a5fbe0d2843d" class="">
+</p><p id="bc64651e-58b5-4d19-846c-0ea921f098d7" class=""> It would be beneficial for us to inquire about the <strong>reasons behind a specific problem </strong>and analyze each one. Let&#x27;s explore the following questions:</p><p id="257bc324-3ba3-4341-8b83-2b0cb90652ef" class="">
+</p><ol type="1" id="7375f3e1-aa4c-4576-8c03-5a4cad2ebea8" class="numbered-list" start="1"><li><strong>How long has the decline in Monthly Active Users (MAU) been going on, and what is the magnitude of this decline?</strong><ul id="a56186c9-3205-4a3a-8de6-633352bf778a" class="bulleted-list"><li style="list-style-type:disc">If we observe a substantial decrease in the number of users, it should raise concerns and prompt us to devise more extensive countermeasures.</li></ul><ul id="894f75e8-5b8d-49fc-8d43-7f60d443f2b9" class="bulleted-list"><li style="list-style-type:disc">If the drop is gradual, it could indicate that users no longer find value in our service and are discontinuing their monthly subscriptions.</li></ul><ul id="877ad29d-e758-42c8-8f2a-136beda6cec9" class="bulleted-list"><li style="list-style-type:disc">If there is a sudden drop, it might be attributed to a product change, a one-time event, a bug, or a new issue that requires a more comprehensive analysis.</li></ul><p id="cd384b14-d7c1-4ac9-9628-6412f105dd67" class="">
+</p></li></ol><ol type="1" id="2a5bd975-ad25-40ba-a22f-ba4ff5e46f40" class="numbered-list" start="2"><li><strong>Is this decline occurring on a global scale or in specific markets?</strong><ul id="4a80efeb-3514-4620-8111-8f0c8081eb86" class="bulleted-list"><li style="list-style-type:disc">If it is a global trend, it could be due to a data bug affecting the numbers mentioned above or other factors.</li></ul><ul id="963d8757-2059-43e0-9489-63ee271a540d" class="bulleted-list"><li style="list-style-type:disc">If it is specific to certain markets, it could be a result of new competitors entering the scene or macro trends that we are unaware of or haven&#x27;t incorporated into our product lineup.
+</li></ul></li></ol><ol type="1" id="73fe77ad-0fd5-4c09-b262-f809c5b6bb03" class="numbered-list" start="3"><li><strong>Did we experience a decline in MAU at the same time last year, or did it only start this year? Is it possibly a recurring pattern associated with seasonality?</strong><ul id="f6d64897-271a-48e0-bf1e-bfd7fa02ccdf" class="bulleted-list"><li style="list-style-type:disc">If it is a recurring pattern, extensive counteractions may not be necessary as there might be limited actions we can take.
+</li></ul></li></ol><ol type="1" id="61186fb9-26e5-4453-bec1-ea6b884a3861" class="numbered-list" start="4"><li><strong>Are there any specific age groups experiencing a significant decline in users?</strong><ul id="d5fb0d5d-9b2f-4b5d-843e-713128fd5091" class="bulleted-list"><li style="list-style-type:disc">If so, it may suggest that we are not adequately catering to this demographic and should consider strategies to make our product and user experience more appealing to them.
+</li></ul></li></ol><ol type="1" id="8d7bc23a-b861-44fb-8f1c-279963cd9609" class="numbered-list" start="5"><li><strong>Are we observing a decrease in the number of new and reactivated users, or is the decline primarily due to user churn?</strong><ul id="873648e3-d7c1-4b94-9382-2764d06517cf" class="bulleted-list"><li style="list-style-type:disc">If there is a decline in new and reactivated users, we should evaluate our current acquisition strategy program.</li></ul><ul id="c6897633-bba8-4a40-bbf3-ab287b77dc20" class="bulleted-list"><li style="list-style-type:disc">If the decline is primarily due to user churn, we should examine our engagement strategy program.</li></ul><p id="350b7546-ba74-416f-95c0-ccf923b2e738" class="">
+</p></li></ol><ol type="1" id="71534de0-e6ad-4cf0-942c-b8331fa3d83a" class="numbered-list" start="6"><li><strong>[External] Have any new competitors recently entered the market, or has an existing competitor introduced new features or offerings?</strong><ul id="157fc62d-82ff-4f5b-9d0e-c6a4ebdcf3ab" class="bulleted-list"><li style="list-style-type:disc">Unfortunately, the data we currently possess does not provide insight into this aspect, and our analytics alone cannot determine the reason for the decrease in MAU. It would be wise to investigate the actions taken by our competitors and consider whether it is beneficial for us to develop similar offerings or take alternative measures.
+</li></ul></li></ol><ol type="1" id="36edaefe-0e6c-49af-9ffe-d0b6d502f019" class="numbered-list" start="7"><li><strong>[External] Is there a specific device type, such as iOS or Android, experiencing a significant decline in users?</strong><ul id="38e4fa46-d638-45b9-95c4-0ea0297ae7fe" class="bulleted-list"><li style="list-style-type:disc">The decline in users by platform can be obtained from the data. However, the underlying cause could be an external factor, such as new pre-installed streaming services on the device.</li></ul></li></ol><p id="765520f5-0703-4701-8c8c-fd1be55431e4" class="">
+</p><p id="6ff808d0-d1ad-430d-bfb3-b22d23f7f75d" class="">
+</p><h3 id="393c521f-729f-42b9-93f9-cffe8ca3dd96" class=""><strong>Interpret the results</strong></h3><p id="a5941e7a-e6a1-4147-87fb-35497d4cb53f" class=""> After<strong> breaking down the problem into smaller questions</strong> and analyzing the data, we identify that the decrease of 1 million Monthly Active Users (MAU) is most likely due to a <strong>higher churn rate in a specific demographic range</strong> and possibly <strong>competition</strong>. By uncovering the key insights, we can provide some recommendations for the business.</p><figure id="44cbfc8e-8fa5-4bd3-bff8-94667e7e9858" class="image"><a href="Customer%20Decrease%20Analysis%20-%20Netlfix%201446f9b2c06e43e1b1746617b44d6b2e/instad.io-11_Sep_2023_17_21.png"><img style="width:432px" src="Customer%20Decrease%20Analysis%20-%20Netlfix%201446f9b2c06e43e1b1746617b44d6b2e/instad.io-11_Sep_2023_17_21.png"/></a></figure><p id="5e060625-d625-4aa9-9e14-283bd9331457" class="">
+</p><h3 id="9b7ef974-5745-40cf-b9f4-90660a3286e8" class=""> <strong>Business Solutions</strong></h3><p id="996b173d-40a2-4a08-b325-5915ff10ffc0" class=""> One suggestion is to focus on engagement strategies in <strong>order to reduce churn among the 18-24 age group in Europe.</strong> This could involve actions such as making PR announcements, improving email communication effectiveness, or featuring audience-specific content on the Home menu. </p><p id="e464128a-4bcb-41f8-aa42-036182f3d8be" class=""> Another effective approach would be to conduct a <strong>Cohort analysis</strong> to identify the behaviors of active users that drive their engagement with the company&#x27;s products. This information can then be used to implement similar activities for the unengaged group, thereby preventing churn.</p><p id="4b0e8104-9988-4a1d-b5b5-0ad128c07053" class=""> In terms of<strong> analyzing the competition</strong>, one approach we could take is to conduct <strong>user research</strong>. This would involve gathering insights on the features that users would prefer, as well as their satisfaction with the diverse services offered by the company. By doing so, we can better understand the areas where we can improve and develop strategies to stay competitive.</p><p id="80ed1241-b7f9-4a5d-bae4-24014ae83960" class="">
+</p><h3 id="bf64f625-42e4-47b1-a091-4193b68cc390" class=""> <strong>Conclusion</strong></h3><p id="afc1fa77-9146-4866-b429-6ad97fffdc50" class=""> Investigating and addressing a decline in Monthly Active Users (MAU) requires a comprehensive analysis of the problem. By breaking down the issue into smaller questions and analyzing the data, we can uncover insights and provide targeted recommendations. It is important to consider factors such as the duration and magnitude of the decline, geographic variations, demographic patterns, user acquisition and churn, competition, and platform-specific trends. Implementing engagement strategies, conducting cohort analysis, and conducting user research can help address the decline and improve user retention and satisfaction.</p></div></article></body></html>
